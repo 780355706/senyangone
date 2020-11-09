@@ -1,8 +1,6 @@
 package com.senyang.day15.servlet;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +11,7 @@ import java.io.IOException;
 
 @WebServlet("/caseServlet")
 public class CaseServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //1.获取要下载的文件名
         String fileName = request.getParameter("fileName");
         //2.获取ServletContext对象
@@ -30,13 +28,13 @@ public class CaseServlet extends HttpServlet {
         ServletOutputStream sos = response.getOutputStream();
         //将文件读取到内存并将文件响应到浏览器
         byte[] bytes = new byte[8 * 1024];
-        int len = 0;
+        int len;
         while((len = fis.read(bytes)) != -1) {
             sos.write(bytes, 0, len);
         }
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        doPost(request, response);//doPost
     }
 }
